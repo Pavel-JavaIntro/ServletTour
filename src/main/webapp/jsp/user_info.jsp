@@ -5,7 +5,7 @@
   Time: 11:57 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
@@ -13,5 +13,6 @@
 </head>
 <body>
 <p>User: ${user}</p>
+<p>Users: ${userList}</p>
 </body>
 </html>
