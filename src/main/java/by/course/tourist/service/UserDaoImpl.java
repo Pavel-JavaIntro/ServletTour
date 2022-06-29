@@ -10,15 +10,20 @@ import org.springframework.stereotype.Service;
 import java.sql.*;
 import java.util.List;
 
-@Service("impl")
+@Service
 public class UserDaoImpl implements UserDao {
-//  public static final String URL = "jdbc:postgresql://localhost:5432/tourism";
-//  public static final String USER = "postgres";
-//  public static final String PASS = "pavel";
-  @Autowired
+
   private JdbcTemplate jdbcTemplate;
-  @Autowired
   private UserMapper userMapper;
+
+  @Autowired
+  public UserDaoImpl(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
+    this.jdbcTemplate = jdbcTemplate;
+    this.userMapper = userMapper;
+  }
+
+  public UserDaoImpl() {
+  }
 
   @Override
   public User getUserById(int id) {
