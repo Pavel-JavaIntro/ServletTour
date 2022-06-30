@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
+@ComponentScan("by.course.tourist")
 public class Config {
     public static final String DRIVER_NAME = "org.postgresql.Driver";
     public static final String URL = "jdbc:postgresql://localhost:5432/tourism";

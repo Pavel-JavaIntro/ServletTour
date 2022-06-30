@@ -1,5 +1,6 @@
 package by.course.tourist.controller;
 
+import by.course.tourist.config.Config;
 import by.course.tourist.mapper.UserMapper;
 import by.course.tourist.model.User;
 import by.course.tourist.repository.UserDao;
@@ -20,14 +21,13 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/controller")
-@ComponentScan("by.course.tourist")
 public class TourServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     int id = Integer.parseInt(req.getParameter("userId"));
-    ApplicationContext context = new AnnotationConfigApplicationContext(TourServlet.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     UserDao userDao = context.getBean(UserDaoImpl.class);
     if (id > 0) {
       User user = userDao.getUserById(id);
