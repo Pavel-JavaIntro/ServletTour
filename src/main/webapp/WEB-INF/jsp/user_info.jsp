@@ -13,6 +13,6 @@
 </head>
 <body>
 <p>User: ${user}</p>
-<p>Users: ${userList}</p>
+<p>Users: ${users}</p>
 </body>
 </html>
