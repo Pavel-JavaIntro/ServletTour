@@ -11,5 +11,6 @@ public interface UserDao {
     List<User> getAllUsers();
     int addUser(User user);
     int addUser(String name, String surname, String email, int roleId, String login, int password);
+    int updateUser(int id, String name, String surname, String email, int roleId, String login, int password);
     int deleteUser(int id);
 }
