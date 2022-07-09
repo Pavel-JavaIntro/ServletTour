@@ -3,75 +3,48 @@ package by.course.tourist.controller;
 import by.course.tourist.model.User;
 import by.course.tourist.service.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/users")
 public class UserController {
 
   @Autowired UserDaoImpl dao;
 
-  @GetMapping("/users")
-  public String showUsers(ModelMap map) {
+  @GetMapping("/")
+  public ResponseEntity<List<User>> getUsers() {
     List<User> users = dao.getAllUsers();
-    map.addAttribute("users", users);
-    return "user_info";
+    return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
-  @GetMapping("/users/{id}")
-  public String showUser(@PathVariable int id, ModelMap map) {
+  @GetMapping("/{id}")
+  public ResponseEntity<User> getUser(@PathVariable int id) {
     User user = dao.getUserById(id);
-    map.addAttribute(user);
-    return "user_info";
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
-  @PostMapping("/users")
-  public String addUser(
-      @RequestParam String name,
-      @RequestParam String surname,
-      @RequestParam String email,
-      @RequestParam("roleId") String role,
-      @RequestParam String login,
-      @RequestParam("password") String pass,
-      ModelMap map) {
-    int roleId = Integer.parseInt(role);
-    int password = Integer.parseInt(pass);
-              dao.addUser(name, surname, email, roleId, login, password);
-              map.addAttribute("users", dao.getAllUsers());
-    return "user_info";
+  @PutMapping("/")
+  public ResponseEntity<User> updateUser(@RequestBody User user) {
+    dao.updateUser(user);
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
-  @PostMapping("/users/{id}")
-  public String updateUser(@PathVariable @RequestParam int id,
-                           @RequestParam("gname") String name,
-                           @RequestParam("gsurname") String surname,
-                           @RequestParam("gemail") String email,
-                           @RequestParam("groleId") String role,
-                           @RequestParam("glogin") String login,
-                           @RequestParam("gpassword") String pass,
-                           ModelMap map) {
-    int roleId = Integer.parseInt(role);
-    int password = Integer.parseInt(pass);
-    dao.updateUser(id, name, surname, email, roleId, login, password);
-    map.addAttribute("users", dao.getAllUsers());
-    return "user_info";
+  @PostMapping("/")
+  public ResponseEntity<User> addUser(@RequestBody User user) {
+    dao.addUser(user);
+    return new ResponseEntity<>(user, HttpStatus.CREATED);
   }
 
-  //    public String addUser(@RequestBody User user) {
-  //        dao.addUser(user);
-  //        return "user_info";
-  //    }
-
-  @DeleteMapping("/users/{id}")
-  public String deleteUser(@PathVariable int id, ModelMap map) {
+  @DeleteMapping("/{id}")
+  public HttpStatus deleteUser(@PathVariable int id) {
     dao.deleteUser(id);
-    map.addAttribute("users", dao.getAllUsers());
-    return "user_info";
+    return HttpStatus.NO_CONTENT;
   }
-
 }

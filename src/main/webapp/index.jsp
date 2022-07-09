@@ -24,7 +24,7 @@
 <br/>
 <br/>
 
-<form method="post" action="users/{id}">
+<form method="post" action="users">
     <input type="number" id="id" name="id" placeholder="ID"/><br/>
     <input type="text" id="gname" name="gname" placeholder="Name"/><br/>
     <input type="text" id="gsurname" name="gsurname" placeholder="Surname"/><br/>

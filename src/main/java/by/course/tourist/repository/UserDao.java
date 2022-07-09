@@ -10,7 +10,6 @@ public interface UserDao {
     User getUserById(int id);
     List<User> getAllUsers();
     int addUser(User user);
-    int addUser(String name, String surname, String email, int roleId, String login, int password);
-    int updateUser(int id, String name, String surname, String email, int roleId, String login, int password);
+    int updateUser(User user);
     int deleteUser(int id);
 }
