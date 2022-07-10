@@ -1,5 +1,6 @@
 package by.course.tourist.controller;
 
+import by.course.tourist.annotation.LogAnnotation;
 import by.course.tourist.exception.IncorrectData;
 import by.course.tourist.exception.NoSuchIDException;
 import by.course.tourist.model.User;
@@ -38,6 +39,7 @@ public class UserController {
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
+  @LogAnnotation
   @PostMapping("/")
   public ResponseEntity<User> addUser(@RequestBody User user) {
     dao.addUser(user);
