@@ -1,5 +1,7 @@
 package by.course.tourist.controller;
 
+import by.course.tourist.exception.IncorrectData;
+import by.course.tourist.exception.NoSuchIDException;
 import by.course.tourist.model.User;
 import by.course.tourist.service.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,10 @@ public class UserController {
 
   @DeleteMapping("/{id}")
   public HttpStatus deleteUser(@PathVariable int id) {
-    dao.deleteUser(id);
+    int rows = dao.deleteUser(id);
+    if (rows == 0) {
+      throw new NoSuchIDException("This User id is not in the DB");
+    }
     return HttpStatus.NO_CONTENT;
   }
 }

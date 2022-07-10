@@ -1,9 +1,11 @@
 package by.course.tourist.service;
 
+import by.course.tourist.exception.NoSuchIDException;
 import by.course.tourist.mapper.UserMapper;
 import by.course.tourist.model.User;
 import by.course.tourist.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,13 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public User getUserById(int id) {
-    return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id=?", userMapper, id);
+    try {
+      User user =  jdbcTemplate.queryForObject("SELECT * FROM users WHERE id=?", userMapper, id);
+      return user;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      throw new NoSuchIDException("User with id = " + id + " is not found in the DB");
+    }
   }
 
   @Override

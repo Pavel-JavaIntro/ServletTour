@@ -1,5 +1,6 @@
 package by.course.tourist.controller;
 
+import by.course.tourist.exception.NoSuchIDException;
 import by.course.tourist.model.Tour;
 import by.course.tourist.model.User;
 import by.course.tourist.service.TourDaoImpl;
@@ -25,6 +26,9 @@ public class TourController {
     @GetMapping("/{id}")
     public ResponseEntity<Tour> getTour(@PathVariable int id) {
         Tour tour = dao.getTourById(id);
+        if (tour == null) {
+            throw new NoSuchIDException("No such Tour ID exists");
+        }
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 
@@ -42,6 +46,7 @@ public class TourController {
 
     @DeleteMapping("/{id}")
     public HttpStatus deleteTour(@PathVariable int id) {
+        //TODO probably needs check for id out of range, like in UserController
         dao.deleteTour(id);
         return HttpStatus.NO_CONTENT;
     }

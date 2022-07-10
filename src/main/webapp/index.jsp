@@ -13,7 +13,7 @@
 <body>
 <h3>Training Form</h3>
 <form method="post" action="users">
-    <input type="text" id="name" name="name" placeholder="Name"/><br/>
+    <input type="text" id="name" name="name" placeholder="Имя"/><br/>
     <input type="text" id="surname" name="surname" placeholder="Surname"/><br/>
     <input type="text" id="email" name="email" placeholder="Email"/><br/>
     <input type="number" id="roleId" name="roleId" placeholder="RoleId"/><br/>

@@ -1,11 +1,13 @@
 package by.course.tourist.service;
 
+import by.course.tourist.exception.NoSuchIDException;
 import by.course.tourist.mapper.TourMapper;
 import by.course.tourist.mapper.UserMapper;
 import by.course.tourist.model.Tour;
 import by.course.tourist.model.User;
 import by.course.tourist.repository.TourDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,13 @@ public class TourDaoImpl implements TourDao {
 
   @Override
   public Tour getTourById(int id) {
-    return jdbcTemplate.queryForObject("SELECT * FROM tours WHERE id=?", tourMapper, id);
+    try {
+      Tour tour = jdbcTemplate.queryForObject("SELECT * FROM tours WHERE id=?", tourMapper, id);
+      return tour;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      throw new NoSuchIDException("Tour with id = " + id + " is not found in the DB");
+    }
   }
 
   @Override

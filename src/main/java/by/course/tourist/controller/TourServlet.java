@@ -23,19 +23,19 @@ import java.util.List;
 @WebServlet("/controller")
 public class TourServlet extends HttpServlet {
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    int id = Integer.parseInt(req.getParameter("userId"));
-    ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-    UserDao userDao = context.getBean(UserDaoImpl.class);
-    if (id > 0) {
-      User user = userDao.getUserById(id);
-      req.setAttribute("user", user);
-    } else {
-      List<User> userList = userDao.getAllUsers();
-      req.setAttribute("userList", userList);
-    }
-    req.getRequestDispatcher("jsp/user_info.jsp").forward(req, resp);
-  }
+//  @Override
+//  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+//      throws ServletException, IOException {
+//    int id = Integer.parseInt(req.getParameter("userId"));
+//    ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+//    UserDao userDao = context.getBean(UserDaoImpl.class);
+//    if (id > 0) {
+//      User user = userDao.getUserById(id);
+//      req.setAttribute("user", user);
+//    } else {
+//      List<User> userList = userDao.getAllUsers();
+//      req.setAttribute("userList", userList);
+//    }
+//    req.getRequestDispatcher("jsp/user_info.jsp").forward(req, resp);
+//  }
 }
