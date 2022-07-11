@@ -1,4 +1,4 @@
-package by.course.tourist.controller;
+package by.course.tourist.controller.rest;
 
 import by.course.tourist.annotation.LogAnnotation;
 import by.course.tourist.exception.IncorrectData;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("api/users")
+public class UserRestController {
 
   @Autowired UserDaoImpl dao;
 
-  @GetMapping("/")
+  @GetMapping("")
   public ResponseEntity<List<User>> getUsers() {
     List<User> users = dao.getAllUsers();
     return new ResponseEntity<>(users, HttpStatus.OK);
@@ -33,16 +33,17 @@ public class UserController {
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
-  @PutMapping("/")
+  @PutMapping("")
   public ResponseEntity<User> updateUser(@RequestBody User user) {
     dao.updateUser(user);
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
   @LogAnnotation
-  @PostMapping("/")
+  @PostMapping("")
   public ResponseEntity<User> addUser(@RequestBody User user) {
-    dao.addUser(user);
+    int key = dao.addUser(user);
+    user.setId(key);
     return new ResponseEntity<>(user, HttpStatus.CREATED);
   }
 

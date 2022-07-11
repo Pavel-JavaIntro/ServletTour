@@ -9,8 +9,12 @@ import by.course.tourist.repository.TourDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Service
@@ -42,17 +46,25 @@ public class TourDaoImpl implements TourDao {
 
   @Override
   public int addTour(Tour tour) {
-    return jdbcTemplate.update(
-        "INSERT INTO tours (status_id, description, capacity, start_date, end_date, price, booked, status_id) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-        tour.getStatusId(),
-        tour.getDescription(),
-        tour.getCapacity(),
-        tour.getStartDate(),
-        tour.getEndDate(),
-        tour.getPrice(),
-        tour.getBooked(),
-        tour.getTypeId());
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    String sql =
+        "INSERT INTO tours (status_id, description, capacity, start_date, end_date, price, booked, type_id) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    jdbcTemplate.update(
+        connection -> {
+          PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+          ps.setInt(1, tour.getStatusId());
+          ps.setString(2, tour.getDescription());
+          ps.setInt(3, tour.getCapacity());
+          ps.setDate(4, new java.sql.Date(tour.getStartDate().getTime()));
+          ps.setDate(5, new java.sql.Date(tour.getEndDate().getTime()));
+          ps.setInt(6, tour.getPrice());
+          ps.setInt(7, tour.getBooked());
+          ps.setInt(8, tour.getTypeId());
+          return ps;
+        },
+        keyHolder);
+    return (int)keyHolder.getKeys().get("id");
   }
 
   @Override

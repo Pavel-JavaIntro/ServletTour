@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class LogAspect {
 
-  @Around("execution(* by.course.tourist.controller.TourController.getTours())")
+  @Around("execution(* by.course.tourist.controller.rest.TourRestController.getTours())")
   public ResponseEntity<List<Tour>> logTourCheck(ProceedingJoinPoint joinPoint) throws Throwable {
     log.info("before " + joinPoint.getSignature().getName());
     ResponseEntity<List<Tour>> re = (ResponseEntity) joinPoint.proceed();
