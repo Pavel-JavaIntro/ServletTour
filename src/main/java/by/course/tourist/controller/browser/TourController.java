@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +19,10 @@ public class TourController {
     TourDaoImpl dao;
 
     @GetMapping("")
-    public ResponseEntity<List<Tour>> getTours() {
+    public String getTours(ModelMap map) {
         List<Tour> tours = dao.getAllTours();
-        return new ResponseEntity<>(tours, HttpStatus.OK);
+        map.addAttribute("users", tours);
+        return "user_info";
     }
 
     @GetMapping("/{id}")

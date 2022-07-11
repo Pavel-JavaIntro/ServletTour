@@ -12,8 +12,8 @@
 </head>
 <body>
 <h2>Welcome to Servlet Tour</h2><br>
-<a href="WEB-INF/jsp/users.jsp">Manage Users</a><br>
-<a href="WEB-INF/jsp/user_info.jsp">Manage Tours</a>
+<a href="users">Manage Users</a><br>
+<a href="tours">Manage Tours</a>
 
 </body>
 </html>
